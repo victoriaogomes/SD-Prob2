@@ -1,0 +1,13 @@
+	component arqt is
+		port (
+			buttons_export                  : in  std_logic_vector(3 downto 0) := (others => 'X'); -- export
+			clk_clk                         : in  std_logic                    := 'X';             -- clk
+			lcd_display_readdata            : out std_logic_vector(7 downto 0);                    -- readdata
+			lcd_enable_writeresponsevalid_n : out std_logic;                                       -- writeresponsevalid_n
+			lcd_rs_writeresponsevalid_n     : out std_logic;                                       -- writeresponsevalid_n
+			lcd_rw_writeresponsevalid_n     : out std_logic;                                       -- writeresponsevalid_n
+			leds_export                     : out std_logic_vector(3 downto 0);                    -- export
+			reset_reset_n                   : in  std_logic                    := 'X'              -- reset_n
+		);
+	end component arqt;
+
