@@ -64,7 +64,7 @@ initialize_lcd:
 	ret # Retorna para a rotina que chamou essa label
 
 # ----------------------------------------------------   DELAYS ----------------------------------------------------- #
-delay_15ms: 
+delay_15ms:
 	addi r11, r11, 1 # Adiciona 1 no registrador r11
 	bne r11, r8, delay_15ms # Verifica se r11 armazena mesmo valor que r8 (se não, volta pro início do looping)
 	addi r11, r0, 0 # Zera o registrador r11
@@ -352,7 +352,7 @@ loop_four:
 
 
 # -------------------------------------------------  ACENDER LED CORRESPONDENTE --------------------------------------------------- #
-leds_on: 
+leds_on:
 	stbio r18, 0(r3) # Armazena nos leds (r3) o valor de r18, ou seja, acende o led escolhido
 	movia r15, 0xE # Armazena em r15 o valor 0XE, usado para verificar se o botão de "voltar" foi selecionado
 	call write_doll # Chama label que mostra a mensagem referente a opção selecionada
@@ -373,7 +373,7 @@ leds_on:
 
 
 # ----------------------------------------------  ESCREVE O QUE HÁ EM R16 NO LCD ------------------------------------------------- #
-write: 
+write:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	custom 0, r23, r17, r16 # Envia dado armazenado em R16 para ser escrito
@@ -397,7 +397,7 @@ shift_write:
 
 
 # ---------------------------------------------  ESCREVE A PALAVRA "Menu" NO DISPLAY ----------------------------------------------- #
-write_menu: 
+write_menu:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	movia r16, 0x4D # Caractere "M"
@@ -620,7 +620,7 @@ write_doll:
 write_state_numer:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
-	custom 0, r23, r17, r19 # Envia dado armazenado em R16 para ser escrito
+	custom 0, r23, r17, r19 # Envia dado armazenado em R19 para ser escrito
 	call delay_0_053ms # Delay de 0.053ms
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
