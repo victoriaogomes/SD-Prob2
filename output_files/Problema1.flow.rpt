@@ -1,5 +1,5 @@
 Flow report for problema1
-Wed May 08 08:43:27 2019
+Wed Jul 24 20:44:39 2019
 Quartus Prime Version 16.1.2 Build 203 01/18/2017 SJ Lite Edition
 
 
@@ -41,18 +41,18 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed May 08 08:43:18 2019       ;
+; Flow Status                        ; Successful - Wed Jul 24 20:44:36 2019       ;
 ; Quartus Prime Version              ; 16.1.2 Build 203 01/18/2017 SJ Lite Edition ;
 ; Revision Name                      ; problema1                                   ;
 ; Top-level Entity Name              ; problema1                                   ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE6E22C8                                 ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 1,734 / 6,272 ( 28 % )                      ;
-;     Total combinational functions  ; 1,617 / 6,272 ( 26 % )                      ;
-;     Dedicated logic registers      ; 931 / 6,272 ( 15 % )                        ;
-; Total registers                    ; 931                                         ;
-; Total pins                         ; 19 / 92 ( 21 % )                            ;
+; Total logic elements               ; 1,940 / 6,272 ( 31 % )                      ;
+;     Total combinational functions  ; 1,813 / 6,272 ( 29 % )                      ;
+;     Dedicated logic registers      ; 1,053 / 6,272 ( 17 % )                      ;
+; Total registers                    ; 1053                                        ;
+; Total pins                         ; 21 / 92 ( 23 % )                            ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 76,800 / 276,480 ( 28 % )                   ;
 ; Embedded Multiplier 9-bit elements ; 0 / 30 ( 0 % )                              ;
@@ -65,7 +65,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/08/2019 08:41:22 ;
+; Start date & time ; 07/24/2019 20:43:53 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; problema1           ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ agreement for further details.
 +-------------------------------------+--------------------------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+--------------------------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 110073158896957.155731568211568                        ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 93181009264021.156401183304248                         ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                                      ; --            ; --          ; --         ;
 ; MISC_FILE                           ; arqt/synthesis/../arqt.cmp                             ; --            ; --          ; --         ;
@@ -90,7 +90,7 @@ agreement for further details.
 ; PROJECT_OUTPUT_DIRECTORY            ; output_files                                           ; --            ; --          ; --         ;
 ; SLD_FILE                            ; arqt/synthesis/arqt.regmap                             ; --            ; --          ; --         ;
 ; SLD_FILE                            ; arqt/synthesis/arqt.debuginfo                          ; --            ; --          ; --         ;
-; SLD_INFO                            ; QSYS_NAME arqt HAS_SOPCINFO 1 GENERATION_ID 1554945849 ; --            ; arqt        ; --         ;
+; SLD_INFO                            ; QSYS_NAME arqt HAS_SOPCINFO 1 GENERATION_ID 1564010014 ; --            ; arqt        ; --         ;
 ; SOPCINFO_FILE                       ; arqt/synthesis/../../arqt.sopcinfo                     ; --            ; --          ; --         ;
 ; SYNTHESIS_ONLY_QIP                  ; On                                                     ; --            ; --          ; --         ;
 +-------------------------------------+--------------------------------------------------------+---------------+-------------+------------+
@@ -101,11 +101,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:01:20     ; 1.0                     ; 4906 MB             ; 00:01:42                           ;
-; Fitter                    ; 00:00:21     ; 1.1                     ; 5280 MB             ; 00:00:18                           ;
-; Assembler                 ; 00:00:04     ; 1.0                     ; 4698 MB             ; 00:00:02                           ;
-; TimeQuest Timing Analyzer ; 00:00:07     ; 1.1                     ; 4770 MB             ; 00:00:05                           ;
-; Total                     ; 00:01:52     ; --                      ; --                  ; 00:02:07                           ;
+; Analysis & Synthesis      ; 00:00:30     ; 1.0                     ; 4887 MB             ; 00:00:50                           ;
+; Fitter                    ; 00:00:07     ; 1.1                     ; 5526 MB             ; 00:00:09                           ;
+; Assembler                 ; 00:00:02     ; 1.0                     ; 4683 MB             ; 00:00:01                           ;
+; TimeQuest Timing Analyzer ; 00:00:02     ; 1.2                     ; 4783 MB             ; 00:00:02                           ;
+; Total                     ; 00:00:41     ; --                      ; --                  ; 00:01:02                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -114,20 +114,20 @@ agreement for further details.
 +---------------------------+------------------+------------+------------+----------------+
 ; Module Name               ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +---------------------------+------------------+------------+------------+----------------+
-; Analysis & Synthesis      ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter                    ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler                 ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
-; TimeQuest Timing Analyzer ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis      ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                    ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler                 ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
+; TimeQuest Timing Analyzer ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
 +---------------------------+------------------+------------+------------+----------------+
 
 
 ------------
 ; Flow Log ;
 ------------
-quartus_map --read_settings_files=on --write_settings_files=off Problema1 -c problema1
-quartus_fit --read_settings_files=off --write_settings_files=off Problema1 -c problema1
-quartus_asm --read_settings_files=off --write_settings_files=off Problema1 -c problema1
-quartus_sta Problema1 -c problema1
+quartus_map --read_settings_files=on --write_settings_files=off problema1 -c problema1
+quartus_fit --read_settings_files=off --write_settings_files=off problema1 -c problema1
+quartus_asm --read_settings_files=off --write_settings_files=off problema1 -c problema1
+quartus_sta problema1 -c problema1
 
 
 

@@ -12,6 +12,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "uart_tx",
+					"strict" : false
+				},
+				{
 					"name" : "display[7]",
 					"strict" : false
 				},
@@ -77,6 +81,10 @@
 				},
 				{
 					"name" : "buttons[3]",
+					"strict" : false
+				},
+				{
+					"name" : "uart_rx",
 					"strict" : false
 				},
 				{

@@ -1,28 +1,257 @@
 .equ switches, 0x00003030
 .equ leds, 0x00003020
+.equ delay15ms, 0xF424
+.equ delay4_1ms, 0x42BB
+.equ delay0_1ms, 0x1A0
+.equ delay100ms, 0x65B9A
+.equ delay0_053ms, 0xDC
+.equ delay1s, 0x3F940B
+.equ uart, 0x00002020
+
+# ---------------------------------------------   TEXTO DOS COMANDOS AT -------------------------------------------- #
+.equ A, 0x41
+.equ T, 0x54
+.equ mais, 0x2b
+.equ C, 0x43
+.equ W, 0x57
+.equ M, 0x4D
+.equ O, 0x4f
+.equ D, 0x44
+.equ E, 0x45
+.equ igual, 0x3d
+.equ um, 0x31
+.equ J, 0x4a
+.equ P, 0x50
+.equ S, 0x53
+.equ R, 0x52
+.equ I, 0x49
+.equ aspas, 0x22
+.equ virgula, 0x2c
+.equ H, 0x48
 
 .global _start
 
 
+# ------------------------------------------------   FUNÇÃO PRINCIPAL ----------------------------------------------- #
 _start:
 	movia r2, switches # Move para r2 o endereço dos switches
 	movia r3, leds # Move para r3 o endereço dos leds
+	movia r5, uart # Move para r5 o endereço base da uart
+	movia r9, 0x0 # Contador utilizado nos delays, inicializado em 0
 	call turn_led_off # Chama a função que desligará todos os leds
-	call set_constants # Chama a função que seta as constantes para os delays utilizados
 	call initialize_lcd # Chama a função que inicializa o LCD
+	call send_ATCommand0 # Chama função para configurar o ESP8266 no modo de comandos AT
+	call send_ATCommand1 # Chama função para configurar o ESP8266 no modo de comandos AT
+	call send_ATCommand2 # Chama função para configurar o ESP8266 no modo de comandos AT
+	call send_ATCommand3 # Chama função para configurar o ESP8266 no modo de comandos AT
 	call state_zero # Chama a função state_zero, começando a execução da máquina de estados
 
 
-set_constants:
-	movia r11, 0x0 # r11 -> contador, inicializado como 0
-	movia r8, 0xF424 # r8 -> valor para o delay de 15ms
-	movia r9, 0x42BB # r9 -> valor para o delay de 4.1ms
-	movia r10, 0x1A0 # r10 -> valor para o delay de 0.1ms
-	movia r12, 0x65B9A # r12 -> valor para o delay de 100ms
-	movia r13, 0xDC # r13 -> valor para o delay de 0.053ms
+# ----------------------------------------------   CONFIGURAÇÃO DO ESP --------------------------------------------- #
+send_ATCommand0:
+	movia r21, A # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "A" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, T # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "T" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	ret # Retorna para a rotina que chamou essa label
+
+send_ATCommand1:
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	send_ATCommand0 # Envia "AT" ao ESP8266
+	movia r21, mais # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "+" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, C # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "C" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, W # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "W" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, M # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "M" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, O # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "O" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, D # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "D" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, E # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "E" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, igual # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "=" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, um # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "1" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
+	ret # Retorna para a rotina que chamou essa label
+
+send_ATCommand2:
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	send_ATCommand0 # Envia "AT" ao ESP8266
+	movia r21, C # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "C" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, W # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "W" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, J # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "J" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, A # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "A" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, P # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "P" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, igual # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "=" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, W # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "W" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, O # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "O" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, W # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "W" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, virgula # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "," ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, T # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "T" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, A # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "A" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, mais # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "+" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, C # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "C" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, H # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "H" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, A # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "A" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, T # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "T" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, O # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "O" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
+	ret # Retorna para a rotina que chamou essa label
+
+send_ATCommand3:
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	call send_ATCommand0 # Chama função que envia "AT" ao ESP8266
+	movia r21, mais # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "+" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, C # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "C" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, I # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "I" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, P # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "P" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, S # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "S" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, T # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "T" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, A # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "A" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, R # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "R" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, T # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "T" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, igual # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "=" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, T # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "T" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, C # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "C" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, P # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "P" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, virgula # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "," ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	#--------------------------- INSERIR IP DO PC DE BRUNO AQUI -------------------------------#
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, virgula # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "," ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x31 # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "1" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x38 # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "8" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x38 # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "8" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x33 # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar "3" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
+	write_uart # Chama função para enviar aspas ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
 
 
+# --------------------------------------------   INICIALIZAÇÃO DO LCD ----------------------------------------------- #
 initialize_lcd:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
@@ -63,39 +292,60 @@ initialize_lcd:
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
 
+
 # ----------------------------------------------------   DELAYS ----------------------------------------------------- #
 delay_15ms:
-	addi r11, r11, 1 # Adiciona 1 no registrador r11
-	bne r11, r8, delay_15ms # Verifica se r11 armazena mesmo valor que r8 (se não, volta pro início do looping)
-	addi r11, r0, 0 # Zera o registrador r11
-	ret # Retorna para a rotina que chamou essa label
-
+	movia r8, delay15ms # Armazena o valor usado para o delay de 15ms em r8
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	call loop # Chama a função que realiza o delay efetivamente
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
 
 delay_4_1ms:
-	addi r11, r11, 1 # Adiciona 1 no registrador r11
-	bne r11, r9, delay_4_1ms # Verifica se r11 armazena mesmo valor que r9 (se não, volta pro início do looping)
-	addi r11, r0, 0 # Zera o registrador r11
-	ret # retorna para a rotina que chamou essa label
-
+	movia r8, delay4_1ms # Armazena o valor usado para o delay de 4.1ms em r8
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	call loop # Chama a função que realiza o delay efetivamente
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
 
 delay_0_1ms:
-	addi r11, r11, 1 # Adiciona 1 no registrador r11
-	bne r11, r10, delay_0_1ms # Verifica se r11 armazena mesmo valor que r10 (se não, volta pro início do looping)
-	addi r11, r0, 0 # Zera o registrador r11
-	ret # Retorna para a rotina que chamou essa label
-
+	movia r8, delay0_1ms # Armazena o valor usado para o delay de 0.1ms em r8
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	call loop # Chama a função que realiza o delay efetivamente
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
 
 delay_100ms:
-	addi r11, r11, 1 # Adiciona 1 no registrador r11
-	bne r11, r12, delay_100ms # Verifica se r11 armazena mesmo valor que r12 (se não, volta pro início do looping)
-	addi r11, r0, 0 # Zera o registrador r11
-	ret # Retorna para a rotina que chamou essa label
+	movia r8, delay100ms # Armazena o valor usado para o delay de 100ms em r8
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	call loop # Chama a função que realiza o delay efetivamente
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
 
+delay_1s:
+	movia r8, delay1s # Armazena o valor usado para o delay de 1s em r8
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	call loop # Chama a função que realiza o delay efetivamente
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
 
 delay_0_053ms:
-	addi r11, r11, 1 # Adiciona 1 no registrador r11
-	bne r11, r13, delay_0_053ms # Verifica se r11 armazena mesmo valor que r13 (se não, volta pro início do looping)
-	addi r11, r0, 0 # Zera o registrador r11
+	movia r8, delay0_053ms # Armazena o valor usado para o delay de 0.053ms em r8
+	addi r27, r27, -4 # Aloca espaço na pilha
+	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
+	call loop # Chama a função que realiza o delay efetivamente
+	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
+	addi r27, r27, 4 # Desalocando espaço na pilha
+
+loop:
+	addi r9, r9, 1 # Adiciona 1 no registrador r9
+	bne r9, r8, loop # Verifica se r9 armazena mesmo valor que r8 (se não, volta pro início do looping)
+	addi r9, r0, 0 # Zera o registrador r9
 	ret # Retorna para a rotina que chamou essa label
 
 # ---------------------------------------------   ALTERNÂNCIA ENTRE LINHAS -------------------------------------------------- #
@@ -113,7 +363,6 @@ line_one: # Muda o cursor do display para a primeira linha
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
 
-
 line_two: # Muda o cursor do display para a segunda linha
 	movia r17, 0x0 # Mudando PINRS para envio de instruções
 	addi r27, r27, -4 # Aloca espaço na pilha
@@ -127,7 +376,6 @@ line_two: # Muda o cursor do display para a segunda linha
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
-
 
 line_three: # Muda o cursor do LCD para o terceira linha
 	movia r17, 0x0 # Mudando PINRS para envio de instruções
@@ -143,7 +391,6 @@ line_three: # Muda o cursor do LCD para o terceira linha
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
 
-
 line_four: # Muda o cursor do lcd para a quarta linha do display
 	movia r17, 0x0 # Mudando PINRS para envio de instruções
 	addi r27, r27, -4 # Aloca espaço na pilha
@@ -157,6 +404,7 @@ line_four: # Muda o cursor do lcd para a quarta linha do display
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
+
 
 # ----------------------------------------------------  MÁQUINA DE ESTADOS ----------------------------------------------------- #
 state_zero: # Estado inicial da máquina
@@ -185,9 +433,8 @@ state_zero: # Estado inicial da máquina
 	call write # Repete a escrita pois o display tem mania de ignorar o último caractere
 	call loop_zero # Chama a label que contém o loop que irá esperar por comandos dos botões do estado 2
 
-
 state_one: # Segundo estado da máquina, as quatro primeiras opções do display com a segunda sendo destacada
-	movia r19, 0x31 # Salva em r19 que a máquina se encontra do primeiro estado
+	movia r19, 0x31 # Salva em r19 que a máquina se encontra no estado 1
 	call clear_lcd # Limpa o display
 	call line_one # Move o cursor para a primeira linha
 	call shift_write # Da um shift a direita de 2 espaços
@@ -208,10 +455,9 @@ state_one: # Segundo estado da máquina, as quatro primeiras opções do display
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x33 # Caractere "3"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call write # Repete a escrita pois o display tem mania de ignorar o último caractere
 	call loop_one # Chama a label que contém o loop que irá esperar por comandos dos botões do segundo estado
-
 
 state_two: # Terceiro estado da máquina, as quatro primeiras opções do display com a terceira sendo destacada
 	movia r19, 0x32 # Salva em r19 que a máquina se encontra no estado 2
@@ -220,25 +466,24 @@ state_two: # Terceiro estado da máquina, as quatro primeiras opções do displa
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x30 # Caractere "0"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_two # Move o cursor para a segunda linha
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x31 # Caractere "1"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_three # Move o cursor para a terceira linha
 	call write_arrow # Escreve a seta que seleciona o menu
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x32 # Caractere "2"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_four # Move o cursor para a quarta linha
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x33 # Caractere "3"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call write # Repete a escrita pois o display tem mania de ignorar o último caractere
 	call loop_two # Chama a label que contém o loop que irá esperar por comandos dos botões do terceiro estado
-
 
 state_three: # Quarto estado da máquina, as quatro primeiras opções do display com a quarta sendo destacada
 	movia r19, 0x33 # Salva em r19 que a máquina se encontra no estado 3
@@ -247,25 +492,24 @@ state_three: # Quarto estado da máquina, as quatro primeiras opções do displa
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x30 # Caractere "0"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_two # Move o cursor para a segunda linha
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x31 # Caractere "1"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_three # Move o cursor para a terceira linha
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x32 # Caractere "2"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_four # Move o cursor para a quarta linha
 	call write_arrow # Escreve a seta que seleciona o menu
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x33 # Caractere "3"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call write # Repete a escrita pois o display tem mania de ignorar o último caractere
 	call loop_three # Chama a label que contém o loop que irá esperar por comandos dos botões do quarto estado
-
 
 state_four: # Quinto estado da máquina, as quatro primeiras opções do display com a quinta sendo destacada
 	movia r19, 0x34 # Salva em r19 que a máquina se encontra no estado 4
@@ -274,22 +518,22 @@ state_four: # Quinto estado da máquina, as quatro primeiras opções do display
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x31 # Caractere "1"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_two # Move o cursor para a segunda linha
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x32 # Caractere "2"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_three # Move o cursor para a terceira linha
 	call shift_write # Da um shift a direita de 2 espaços
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x33 # Caractere "3"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call line_four # Move o cursor para a quarta linha
 	call write_arrow # Escreve a seta que seleciona o menu
 	call write_menu # Escreve a palavra "Menu"
 	movia r16, 0x34 # Caractere "4"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call write # Repete a escrita pois o display tem mania de ignorar o último caractere
 	call loop_four # Chama a label que contém o loop que irá esperar por comandos dos botões do quinto estado
 
@@ -304,7 +548,6 @@ loop_zero:
 	beq r4, r15, leds_on # Caso o botão de selecionar seja apertado, dá branch para a função que acenderá o led correspondente
 	br loop_zero # Caso seja nenhuma ou uma combinação errada seja selecionada, ele volta a esperar
 
-
 loop_one:
 	movia r18, 0xB # Move o valor 0XB para r18, o qual é usado para acender o led correspondente a opção do menu
 	ldbio r4, 0(r2) # Carrega o valor do button em r4
@@ -315,7 +558,6 @@ loop_one:
 	movia r15, 0xD # Usa o registrador r15 para carregar os valores que serão comparados para branch
 	beq r4, r15, leds_on # Caso o botão de selecionar seja apertado, dá branch para a função que acenderá o led correspondente
 	br loop_one # Caso seja nenhuma ou uma combinação errada seja selecionada, ele volta a esperar
-
 
 loop_two:
 	movia r18, 0xD # Move o valor 0XD para r18, o qual é usado para acender o led correspondente a opção do menu
@@ -328,7 +570,6 @@ loop_two:
 	beq r4, r15, leds_on # Caso o botão de selecionar seja apertado, dá branch para a função que acenderá o led correspondente
 	br loop_two # Caso seja nenhuma ou uma combinação errada seja selecionada, ele volta a esperar
 
-
 loop_three:
 	movia r18, 0xE # Move o valor 0XE para r18, o qual é usado para acender o led correspondente a opção do menu
 	ldbio r4, 0(r2) # Carrega o valor do button em r4
@@ -339,7 +580,6 @@ loop_three:
 	movia r15, 0xD # Usa o registrador r15 para carregar os valores que serão comparados para branch
 	beq r4, r15, leds_on # Caso o botão de selecionar seja apertado, dá branch para a função que acenderá o led correspondente
 	br loop_three # Caso seja nenhuma ou uma combinação errada seja selecionada, ele volta a esperar
-
 
 loop_four:
 	movia r18, 0xC # Move o valor 0XC para r18, o qual é usado para acender o led correspondente a opção do menu
@@ -388,9 +628,9 @@ shift_write:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	movia r16, 0x20 # Dá um espaço no que tá escrito no Display
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Dá um espaço no que tá escrito no Display
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -401,15 +641,15 @@ write_menu:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	movia r16, 0x4D # Caractere "M"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x65 # Caractere "e"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6E # Caractere "n"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x75 # Caractere "u"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -434,9 +674,9 @@ write_arrow:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x3E # Caractere ">"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -457,160 +697,160 @@ write_doll:
 # ----------- Linha 1
 	call line_one # Chama a função para ir para a linha inicial
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 # ----------- Linha 2
 	call line_two # Move o cursor para a segunda linha
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x7C # Caractere "|"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x56 # Caractere "V"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6F # Caractere "o"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x63 # Caractere "c"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x65 # Caractere "e"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x73 # Caractere "s"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x65 # Caractere "e"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6C # Caractere "l"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x65 # Caractere "e"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x63 # Caractere "c"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x69 # Caractere "i"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6F # Caractere "o"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6E # Caractere "n"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6F # Caractere "o"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x75 # Caractere "u"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x7C # Caractere "|"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 # ----------- Linha 3
 	call line_three # Move o cursor para a terceira linha
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x7C # Caractere "|"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x61 # Caractere "a"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6F # Caractere "o"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x70 # Caractere "p"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x63 # Caractere "c"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x61 # Caractere "a"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x6F # Caractere "o"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	call write_state_numer  # Chama função que escreve o número referente ao estado onde a máquina se encontra
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere espaço em branco
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x7C # Caractere "|"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 # ----------- Linha 4
 	call line_four # Move o cursor para a quarta linha
 	movia r16, 0x20 # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x20 # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	movia r16, 0x2D # Caractere "-"
-	call write # Escreve o valor armazendo no registrador de r16
+	call write # Escreve o valor armazenado no registrador de r16
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -626,5 +866,41 @@ write_state_numer:
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
 
+# -------------------------------- MANDA r21 PRA UART --------------------------------------------------------------------------- #
+write_uart:
+	put_char:
+		/* Salva quaisquer registradores a serem utilizados */
+		subi sp, sp, 4 /* Abre espaço na pilha */
+		stw r22, 0(sp) /* Salva o registrador */
+		/* Acabou de salvar */
+		ldwio r22, 4(r5) /* Lê o registrador de controle do JTAG UART, armazenado em r5 */
+		andhi r22, r22, 0xffff /* Checa se existe espaço pra escrever */
+		beq r22, r0, end_put /* Se não há espaço, não escreve */
+		stwio r21, 0(r5) /* Se há espaço, manda o caractere */
+		/* Recupera tudo ao seu estado original e retorna para quem chamou */
+	end_put:
+		ldw r22, 0(sp) /* Recupera o registrador que foi modificado no corpo da função */
+		addi sp, sp, 4 /* Restaura a pilha ao seu estado original */
+	ret
+
+# -------------------------------- LÊ r12 DA UART --------------------------------------------------------------------------- #
+read_uart:
+	get_char:
+		/* Salva quaisquer registradores a serem utilizados */
+		subi sp, sp, 8 /* Abre espaço na pilha */
+		stw r13, 0(sp) /* Salva o registrador */
+		/* Acabou de salvar */
+		ldwio r12, 0(r5) /* Lê o registrador de controle do JTAG UART, armazenado em r5 */
+		andi r13, r12, 0x8000 /* Checa se chegou algum dado novo */
+		bne r13, r0, return_char /* Se chegou, irá ler na função return_char */
+		mov r12, r0 /* Se não chegou, retornará ‘\0’ */
+		/* Retorna o caractere a ser lido em seguida */
+	return_char:
+		andi r13, r12, 0x00ff /* O dado novo estará no bit menos significativo */
+		mov r12, r13 /* Coloco em r12 o dado que preciso retornar */
+		/* Restauro o registrador r13 e rearrumo a pilha */
+		ldw r13, 0(sp)
+		addi sp, sp, 8
+	ret
 
 .end # ----------------------------- FIM DO ARQUIVO

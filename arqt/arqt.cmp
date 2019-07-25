@@ -7,7 +7,9 @@
 			lcd_rs_writeresponsevalid_n     : out std_logic;                                       -- writeresponsevalid_n
 			lcd_rw_writeresponsevalid_n     : out std_logic;                                       -- writeresponsevalid_n
 			leds_export                     : out std_logic_vector(3 downto 0);                    -- export
-			reset_reset_n                   : in  std_logic                    := 'X'              -- reset_n
+			reset_reset_n                   : in  std_logic                    := 'X';             -- reset_n
+			uart_0_external_connection_rxd  : in  std_logic                    := 'X';             -- rxd
+			uart_0_external_connection_txd  : out std_logic                                        -- txd
 		);
 	end component arqt;
 
