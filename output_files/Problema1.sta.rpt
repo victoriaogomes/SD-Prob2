@@ -1,5 +1,5 @@
 TimeQuest Timing Analyzer report for problema1
-Wed Jul 24 20:44:39 2019
+Thu Jul 25 11:40:46 2019
 Quartus Prime Version 16.1.2 Build 203 01/18/2017 SJ Lite Edition
 
 
@@ -105,16 +105,15 @@ agreement for further details.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 8           ;
-; Maximum allowed            ; 4           ;
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
 ;                            ;             ;
-; Average used               ; 1.18        ;
-; Maximum used               ; 4           ;
+; Average used               ; 1.11        ;
+; Maximum used               ; 2           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   7.3%      ;
-;     Processors 3-4         ;   5.3%      ;
+;     Processor 2            ;  11.0%      ;
 +----------------------------+-------------+
 
 
@@ -123,8 +122,8 @@ agreement for further details.
 +-------------------------------------------------------+--------+--------------------------+
 ; SDC File Path                                         ; Status ; Read at                  ;
 +-------------------------------------------------------+--------+--------------------------+
-; arqt/synthesis/submodules/altera_reset_controller.sdc ; OK     ; Wed Jul 24 20:44:38 2019 ;
-; arqt/synthesis/submodules/arqt_nios2_gen2_0_cpu.sdc   ; OK     ; Wed Jul 24 20:44:38 2019 ;
+; arqt/synthesis/submodules/altera_reset_controller.sdc ; OK     ; Thu Jul 25 11:40:41 2019 ;
+; arqt/synthesis/submodules/arqt_nios2_gen2_0_cpu.sdc   ; OK     ; Thu Jul 25 11:40:41 2019 ;
 +-------------------------------------------------------+--------+--------------------------+
 
 
@@ -1759,11 +1758,11 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime TimeQuest Timing Analyzer
     Info: Version 16.1.2 Build 203 01/18/2017 SJ Lite Edition
-    Info: Processing started: Wed Jul 24 20:44:37 2019
+    Info: Processing started: Thu Jul 25 11:40:38 2019
 Info: Command: quartus_sta problema1 -c problema1
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
 Info (21077): Low junction temperature is 0 degrees C
 Info (21077): High junction temperature is 85 degrees C
 Info (332164): Evaluating HDL-embedded SDC commands
@@ -1918,9 +1917,9 @@ Info (332114): Report Metastability: Found 3 synchronizer chains.
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime TimeQuest Timing Analyzer was successful. 0 errors, 16 warnings
-    Info: Peak virtual memory: 4783 megabytes
-    Info: Processing ended: Wed Jul 24 20:44:39 2019
-    Info: Elapsed time: 00:00:02
-    Info: Total CPU time (on all processors): 00:00:02
+    Info: Peak virtual memory: 4773 megabytes
+    Info: Processing ended: Thu Jul 25 11:40:46 2019
+    Info: Elapsed time: 00:00:08
+    Info: Total CPU time (on all processors): 00:00:06
 
 
