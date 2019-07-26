@@ -239,8 +239,8 @@ send_ATCommand3:
 	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar aspas ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	/*Começo do IP*/
-	movia r21, um # Move para r21 o caractere a ser enviado para o ESP8266
+	# Começo do IP
+	movia r21, 0x31 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "1" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x39 # Move para r21 o caractere a ser enviado para o ESP8266
@@ -252,7 +252,7 @@ send_ATCommand3:
 	movia r21, 0x2e # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "." ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, um # Move para r21 o caractere a ser enviado para o ESP8266
+	movia r21, 0x31 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "1" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x36 # Move para r21 o caractere a ser enviado para o ESP8266
@@ -273,24 +273,21 @@ send_ATCommand3:
 	movia r21, 0x2e # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "." ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x31 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "1" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x35 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "5" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x32 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "2" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, 0x30 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "0" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, 0x30 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "0" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	/*Fim do IP*/
+	#Fim do IP
 	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar aspas ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, virgula # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "," ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar aspas ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x31 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "1" ao ESP8266
@@ -303,9 +300,6 @@ send_ATCommand3:
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x33 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "3" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar aspas ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
