@@ -1,5 +1,5 @@
 Flow report for problema1
-Thu Jul 25 11:40:46 2019
+Fri Jul 26 16:07:14 2019
 Quartus Prime Version 16.1.2 Build 203 01/18/2017 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Thu Jul 25 11:40:35 2019       ;
+; Flow Status                        ; Successful - Fri Jul 26 16:07:09 2019       ;
 ; Quartus Prime Version              ; 16.1.2 Build 203 01/18/2017 SJ Lite Edition ;
 ; Revision Name                      ; problema1                                   ;
 ; Top-level Entity Name              ; problema1                                   ;
@@ -65,7 +65,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 07/25/2019 11:38:03 ;
+; Start date & time ; 07/26/2019 16:06:21 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; problema1           ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ agreement for further details.
 +-------------------------------------+--------------------------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+--------------------------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 110073158896957.156406548201436                        ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 93181009264021.156416798025260                         ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                                      ; --            ; --          ; --         ;
 ; MISC_FILE                           ; arqt/synthesis/../arqt.cmp                             ; --            ; --          ; --         ;
@@ -101,11 +101,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:01:28     ; 1.0                     ; 4910 MB             ; 00:01:57                           ;
-; Fitter                    ; 00:00:39     ; 1.0                     ; 5276 MB             ; 00:00:21                           ;
-; Assembler                 ; 00:00:04     ; 1.0                     ; 4697 MB             ; 00:00:02                           ;
-; TimeQuest Timing Analyzer ; 00:00:08     ; 1.1                     ; 4773 MB             ; 00:00:06                           ;
-; Total                     ; 00:02:19     ; --                      ; --                  ; 00:02:26                           ;
+; Analysis & Synthesis      ; 00:00:33     ; 1.0                     ; 4896 MB             ; 00:00:56                           ;
+; Fitter                    ; 00:00:09     ; 1.1                     ; 5529 MB             ; 00:00:11                           ;
+; Assembler                 ; 00:00:01     ; 1.0                     ; 4683 MB             ; 00:00:02                           ;
+; TimeQuest Timing Analyzer ; 00:00:04     ; 1.2                     ; 4782 MB             ; 00:00:04                           ;
+; Total                     ; 00:00:47     ; --                      ; --                  ; 00:01:13                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -114,10 +114,10 @@ agreement for further details.
 +---------------------------+------------------+------------+------------+----------------+
 ; Module Name               ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +---------------------------+------------------+------------+------------+----------------+
-; Analysis & Synthesis      ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter                    ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler                 ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
-; TimeQuest Timing Analyzer ; DESKTOP-LPC7J05  ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis      ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                    ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler                 ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
+; TimeQuest Timing Analyzer ; DESKTOP-HO88OKO  ; Windows 10 ; 10.0       ; x86_64         ;
 +---------------------------+------------------+------------+------------+----------------+
 
 

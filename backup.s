@@ -11,37 +11,25 @@
 # ---------------------------------------------   TEXTO DOS COMANDOS AT -------------------------------------------- #
 .equ A, 0x41
 .equ T, 0x54
-.equ t, 0x74
+.equ mais, 0x2b
 .equ C, 0x43
-.equ c, 0x63
-.equ f, 0x66
-.equ y, 0x79
 .equ W, 0x57
 .equ M, 0x4D
 .equ N, 0x4e
-.equ n, 0x6e
 .equ O, 0x4f
-.equ o, 0x6f
 .equ D, 0x44
 .equ E, 0x45
-.equ e, 0x65
+.equ igual, 0x3d
+.equ um, 0x31
 .equ J, 0x4a
 .equ P, 0x50
-.equ p, 0x70
 .equ S, 0x53
 .equ R, 0x52
 .equ I, 0x49
-.equ i, 0x69
-.equ H, 0x48
-.equ igual, 0x3d
-.equ mais, 0x2b
-.equ um, 0x31
 .equ aspas, 0x22
 .equ virgula, 0x2c
-.equ traco, 0x2d
-.equ barraCommand, 0x5c
-.equ barra, 0x2F
-.equ ponto, 0x2e
+.equ H, 0x48
+.equ barra, 0x5c
 
 .global _start
 
@@ -54,18 +42,19 @@ _start:
 	movia r9, 0x0 # Contador utilizado nos delays, inicializado em 0
 	call turn_led_off # Chama a função que desligará todos os leds
 	call initialize_lcd # Chama a função que inicializa o LCD
-	# call send_ATCommand0 # Chama função para configurar o ESP8266 no modo de comandos AT
-	# call send_ATCommandEnd
-	# call delay_1s # Chama delay de 1s
-	# call read_uart # Chama função que faz a leitura da UART
-	# call send_ATCommand1 # Chama função para configurar o ESP8266 no modo de comandos AT
-	# call delay_1s # Chama delay de 1s
-	# call read_uart # Chama função que faz a leitura da UART
-	# call send_ATCommand2 # Chama função para configurar o ESP8266 no modo de comandos AT
-	# call delay_1s # Chama delay de 1s
-	# call read_uart # Chama função que faz a leitura da UART
-	# call state_zero # Chama a função state_zero, começando a execução da máquina de estados
-	call loopback
+	call send_ATCommand0 # Chama função para configurar o ESP8266 no modo de comandos AT
+	call send_ATCommandEnd
+	call delay_1s # Chama delay de 1s
+	call read_uart # Chama função que faz a leitura da UART
+	call send_ATCommand1 # Chama função para configurar o ESP8266 no modo de comandos AT
+	call send_ATCommandEnd
+	call delay_1s # Chama delay de 1s
+	call read_uart # Chama função que faz a leitura da UART
+	call send_ATCommand2 # Chama função para configurar o ESP8266 no modo de comandos AT
+	call send_ATCommandEnd
+	call delay_1s # Chama delay de 1s
+	call read_uart # Chama função que faz a leitura da UART
+	call state_zero # Chama a função state_zero, começando a execução da máquina de estados
 
 
 # ----------------------------------------------   CONFIGURAÇÃO DO ESP --------------------------------------------- #
@@ -113,7 +102,6 @@ send_ATCommand1:
 	movia r21, um # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "1" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	call send_ATCommandEnd
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -143,44 +131,14 @@ send_ATCommand2:
 	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar aspas ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, C # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "C" ao ESP8266
+	movia r21, W # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "W" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, o # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "o" ao ESP8266
+	movia r21, O # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "O" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, n # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "n" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, n # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "n" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, e # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "e" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, c # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "c" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, t # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "t" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, i # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "i" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, f # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "f" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, y # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "y" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, traco # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "-" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, o # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "o" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, i # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "i" ao ESP8266
+	movia r21, W # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "W" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar aspas ao ESP8266
@@ -218,7 +176,6 @@ send_ATCommand2:
 	movia r21, aspas # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar aspas ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	call send_ATCommandEnd
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -303,14 +260,11 @@ send_ATCommand3:
 	movia r21, 0x2e # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "." ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, 0x31 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "1" ao ESP8266
+	movia r21, 0x34 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "4" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x33 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "3" ao ESP8266
-	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, 0x37 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "7" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x2e # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "." ao ESP8266
@@ -318,8 +272,8 @@ send_ATCommand3:
 	movia r21, 0x31 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "1" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, 0x30 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "0" ao ESP8266
+	movia r21, 0x35 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "5" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x32 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "2" ao ESP8266
@@ -343,7 +297,6 @@ send_ATCommand3:
 	movia r21, 0x33 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar "3" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	call send_ATCommandEnd
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -386,11 +339,17 @@ send_ATCommand4:
 send_ATCommandEnd:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
-	movi r21, 13 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "\r" ao ESP8266
+	movia r21, barra # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "\" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movi r21, 10 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "\n" ao ESP8266
+	movia r21, 0x72 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "r" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, barra # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "\" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x74 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar "t" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
@@ -408,16 +367,16 @@ send_MQTT_ConnectPackage:
 	call delay_4_1ms # Chama delay de 4.1ms
 	call send_ATCommandEnd
 	movia r21, 0x10 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "0x10", código de mensagem de conexão MQTT, ao ESP8266
+	call write_uart # Chama função para enviar mensagem de conexão MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x12 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar "18", tamanho restante do pacote de conexão MQTT, ao ESP8266
+	call write_uart # Chama função para enviar o tamanho restante do pacote de conexão MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x00 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar 1ª parte da versão do protocolo MQTT ao ESP8266
+	call write_uart # Chama função para enviar mensagem de configuração MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x04 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar 2ª parte da versão do protocolo MQTT ao ESP8266
+	call write_uart # Chama função para enviar versão do MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x4d # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar o caractere "M" ao ESP8266
@@ -432,7 +391,7 @@ send_MQTT_ConnectPackage:
 	call write_uart # Chama função para enviar o caractere "T" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x04 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar 2ª parte da versão do protocolo MQTT ao ESP8266
+	call write_uart # Chama função para enviar mensagem de configuração MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x02 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar mensagem de configuração MQTT ao ESP8266
@@ -467,7 +426,6 @@ send_MQTT_ConnectPackage:
 	movia r21, 0x32 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar o caractere "2" MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	call send_ATCommandEnd
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -486,7 +444,6 @@ send_MQTT_DisconnectPackage:
 	movia r21, 0x00 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar mensagem de tamanho do pacote MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	call send_ATCommandEnd
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -495,35 +452,43 @@ send_MQTT_Message:
 	addi r27, r27, -4 # Aloca espaço na pilha
 	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	call send_ATCommand4 # Chama mandar "CIPSEND="
-	movia r21, 0x39 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar o caractere "9" ao ESP8266
+	movia r21, um # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar o caractere "1" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x30 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar o caractere "0" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	call send_ATCommandEnd
 	movia r21, 0x30 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar mensagem de publish do pacote MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, 0x07 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar o tamanho restante do pacote MQTT ao ESP8266
+	movia r21, 0x8 # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar o tamanho do pacote MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	movia r21, 0x00 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar mensagem de configuração do pacote MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, 0x03 # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar tamanho do tópico a ser publicado no broker MQTT ao ESP8266
+	movia r21, 0x0C # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar mensagem de configuração do pacote MQTT ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, o # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar o caractere "o" ao ESP8266
+	movia r21, T # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar o caractere "T" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, barra # Move para r21 o caractere a ser enviado para o ESP8266
+	movia r21, um # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar o caractere "1" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, 0x2f # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar o caractere "/" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	movia r21, p # Move para r21 o caractere a ser enviado para o ESP8266
-	call write_uart # Chama função para enviar o caractere "p" ao ESP8266
+	movia r21, A # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar o caractere "A" ao ESP8266
+	call delay_4_1ms # Chama delay de 4.1ms
+	movia r21, um # Move para r21 o caractere a ser enviado para o ESP8266
+	call write_uart # Chama função para enviar o caractere "1" ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
 	add r21, r19, r0 # Move para r21 o caractere a ser enviado para o ESP8266
 	call write_uart # Chama função para enviar o caractere do estado atual ao ESP8266
 	call delay_4_1ms # Chama delay de 4.1ms
-	call send_ATCommandEnd
 	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
 	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret # Retorna para a rotina que chamou essa label
@@ -1109,46 +1074,23 @@ write_state_number:
 
 # -------------------------------- MANDA r21 PRA UART --------------------------------------------------------------------------- #
 write_uart:
-	addi r27, r27, -4 # Aloca espaço na pilha
-	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	put_char:
 		ldwio r22, 4(r5) # Lê o registrador de controle do JTAG UART, armazenado em r5
-		andhi r22, r22, 0x00ff # Checa se existe espaço pra escrever
+		andhi r22, r22, 0xffff # Checa se existe espaço pra escrever
 		beq r22, r0, put_char # Se não há espaço, não escreve e tenta escrever novamente
 	stwio r21, 0(r5) # Se há espaço, manda o caractere
-	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
-	addi r27, r27, 4 # Desalocando espaço na pilha
 	ret
 
 # -------------------------------- LÊ r12 DA UART --------------------------------------------------------------------------- #
 read_uart:
-	addi r27, r27, -4 # Aloca espaço na pilha
-	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
 	get_char:
-		ldwio r12, 0(r5) # Lê o registrador de dados do JTAG UART, armazenado em r5
+		ldwio r12, 0(r5) # Lê o registrador de controle do JTAG UART, armazenado em r5
 		andi r13, r12, 0x8000 # Checa se chegou algum dado novo
 		beq r13, r0, get_char # Se não chegou, irá tentar ler novamente
 	andi r13, r12, 0x00ff # O dado novo estará no bit menos significativo
 	mov r12, r13 # Coloco em r12 o dado que preciso retornar
-#	addi r10, r0, 0x4b # Armazena o caractere "K" em r10
-#	bne r12, r10, get_char # Caso o caractere não seja "K", tento ler novamente
-	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
-	addi r27, r27, 4 # Desalocando espaço na pilha
+	addi r10, r0, 0x4b # Armazena o caractere "K" em r10
+	bne r12, r10, get_char # Caso o caractere não seja "K", tento ler novamente
 	ret
-
-
-loopback:
-#	addi r27, r27, -4 # Aloca espaço na pilha
-#	stw r31, 0(r27) # Salva na pilha o endereço para o qual deverá voltar após executar os procedimetos seguintes
-#	movia r21, A
-#	call write_uart
-#	call delay_4_1ms
-	call read_uart
-	movia r17, 0x1
-	call delay_4_1ms
-	call line_one
-	custom 0, r23, r17, r12
-	ldw r31, 0(r27) # Colocando o endereço para o qual deve voltar no registrador r31
-	addi r27, r27, 4 # Desalocando espaço na pilha
 
 .end # ----------------------------- FIM DO ARQUIVO
