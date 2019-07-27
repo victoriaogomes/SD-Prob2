@@ -7,7 +7,7 @@
 		.lcd_rw_writeresponsevalid_n     (<connected-to-lcd_rw_writeresponsevalid_n>),     //                     lcd_rw.writeresponsevalid_n
 		.leds_export                     (<connected-to-leds_export>),                     //                       leds.export
 		.reset_reset_n                   (<connected-to-reset_reset_n>),                   //                      reset.reset_n
-		.uart_0_external_connection_rxd  (<connected-to-uart_0_external_connection_rxd>),  // uart_0_external_connection.rxd
-		.uart_0_external_connection_txd  (<connected-to-uart_0_external_connection_txd>)   //                           .txd
+		.rs232_0_external_interface_RXD  (<connected-to-rs232_0_external_interface_RXD>),  // rs232_0_external_interface.RXD
+		.rs232_0_external_interface_TXD  (<connected-to-rs232_0_external_interface_TXD>)   //                           .TXD
 	);
 

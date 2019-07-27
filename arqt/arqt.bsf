@@ -48,8 +48,8 @@ agreement for further details.
 	(port
 		(pt 0 392)
 		(input)
-		(text "uart_0_external_connection_rxd" (rect 0 0 128 12)(font "Arial" (font_size 8)))
-		(text "uart_0_external_connection_rxd" (rect 4 381 184 392)(font "Arial" (font_size 8)))
+		(text "rs232_0_external_interface_RXD" (rect 0 0 136 12)(font "Arial" (font_size 8)))
+		(text "rs232_0_external_interface_RXD" (rect 4 381 184 392)(font "Arial" (font_size 8)))
 		(line (pt 0 392)(pt 176 392)(line_width 1))
 	)
 	(port
@@ -90,8 +90,8 @@ agreement for further details.
 	(port
 		(pt 0 408)
 		(output)
-		(text "uart_0_external_connection_txd" (rect 0 0 127 12)(font "Arial" (font_size 8)))
-		(text "uart_0_external_connection_txd" (rect 4 397 184 408)(font "Arial" (font_size 8)))
+		(text "rs232_0_external_interface_TXD" (rect 0 0 134 12)(font "Arial" (font_size 8)))
+		(text "rs232_0_external_interface_TXD" (rect 4 397 184 408)(font "Arial" (font_size 8)))
 		(line (pt 0 408)(pt 176 408)(line_width 1))
 	)
 	(drawing
@@ -111,9 +111,9 @@ agreement for further details.
 		(text "export" (rect 181 307 398 624)(font "Arial" (color 0 0 0)))
 		(text "reset" (rect 147 323 324 659)(font "Arial" (color 128 0 0)(font_size 9)))
 		(text "reset_n" (rect 181 347 404 704)(font "Arial" (color 0 0 0)))
-		(text "uart_0_external_connection" (rect 16 363 188 739)(font "Arial" (color 128 0 0)(font_size 9)))
-		(text "rxd" (rect 181 387 380 784)(font "Arial" (color 0 0 0)))
-		(text "txd" (rect 181 403 380 816)(font "Arial" (color 0 0 0)))
+		(text "rs232_0_external_interface" (rect 16 363 188 739)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "RXD" (rect 181 387 380 784)(font "Arial" (color 0 0 0)))
+		(text "TXD" (rect 181 403 380 816)(font "Arial" (color 0 0 0)))
 		(text " arqt " (rect 444 424 924 858)(font "Arial" ))
 		(line (pt 176 32)(pt 288 32)(line_width 1))
 		(line (pt 288 32)(pt 288 424)(line_width 1))

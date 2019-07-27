@@ -8,8 +8,8 @@ module arqt (
 	lcd_rw_writeresponsevalid_n,
 	leds_export,
 	reset_reset_n,
-	uart_0_external_connection_rxd,
-	uart_0_external_connection_txd);	
+	rs232_0_external_interface_RXD,
+	rs232_0_external_interface_TXD);	
 
 	input	[3:0]	buttons_export;
 	input		clk_clk;
@@ -19,6 +19,6 @@ module arqt (
 	output		lcd_rw_writeresponsevalid_n;
 	output	[3:0]	leds_export;
 	input		reset_reset_n;
-	input		uart_0_external_connection_rxd;
-	output		uart_0_external_connection_txd;
+	input		rs232_0_external_interface_RXD;
+	output		rs232_0_external_interface_TXD;
 endmodule

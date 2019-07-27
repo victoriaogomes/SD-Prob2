@@ -29,12 +29,12 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "12336";
+         value = "20528";
          type = "String";
       }
    }
@@ -58,12 +58,12 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "12360";
+         value = "20568";
          type = "String";
       }
    }
@@ -79,12 +79,12 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "12320";
+         value = "20512";
          type = "String";
       }
    }
@@ -100,8 +100,13 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "8192";
+         type = "String";
       }
    }
    element nios2_gen2_0
@@ -116,16 +121,16 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "10240";
+         value = "18432";
          type = "String";
       }
    }
-   element uart_0
+   element rs232_0
    {
       datum _sortIndex
       {
@@ -133,11 +138,11 @@
          type = "int";
       }
    }
-   element uart_0.s1
+   element rs232_0.avalon_rs232_slave
    {
       datum baseAddress
       {
-         value = "8224";
+         value = "20560";
          type = "String";
       }
    }
@@ -187,8 +192,8 @@
    dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <interface
-   name="uart_0_external_connection"
-   internal="uart_0.external_connection"
+   name="rs232_0_external_interface"
+   internal="rs232_0.external_interface"
    type="conduit"
    dir="end" />
  <module name="LCD_0" kind="LCD" version="1.0" enabled="1" />
@@ -298,10 +303,10 @@
   <parameter name="customInstSlavesSystemInfo_nios_a" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_b" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_c" value="&lt;info/&gt;" />
-  <parameter name="dataAddrWidth" value="14" />
+  <parameter name="dataAddrWidth" value="15" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='memoria.s1' start='0x0' end='0x2000' type='altera_avalon_onchip_memory2.s1' /><slave name='uart_0.s1' start='0x2020' end='0x2040' type='altera_avalon_uart.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x2800' end='0x3000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='leds.s1' start='0x3020' end='0x3030' type='altera_avalon_pio.s1' /><slave name='buttons.s1' start='0x3030' end='0x3040' type='altera_avalon_pio.s1' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x3048' end='0x3050' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='memoria.s1' start='0x2000' end='0x4000' type='altera_avalon_onchip_memory2.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4800' end='0x5000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='leds.s1' start='0x5020' end='0x5030' type='altera_avalon_pio.s1' /><slave name='buttons.s1' start='0x5030' end='0x5040' type='altera_avalon_pio.s1' /><slave name='rs232_0.avalon_rs232_slave' start='0x5050' end='0x5058' type='altera_up_avalon_rs232.avalon_rs232_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x5058' end='0x5060' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -339,15 +344,15 @@
   <parameter name="icache_size" value="4096" />
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Tiny" />
-  <parameter name="instAddrWidth" value="14" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='memoria.s1' start='0x0' end='0x2000' type='altera_avalon_onchip_memory2.s1' /><slave name='uart_0.s1' start='0x2020' end='0x2040' type='altera_avalon_uart.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x2800' end='0x3000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='leds.s1' start='0x3020' end='0x3030' type='altera_avalon_pio.s1' /><slave name='buttons.s1' start='0x3030' end='0x3040' type='altera_avalon_pio.s1' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x3048' end='0x3050' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
+  <parameter name="instAddrWidth" value="15" />
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='memoria.s1' start='0x2000' end='0x4000' type='altera_avalon_onchip_memory2.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4800' end='0x5000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='leds.s1' start='0x5020' end='0x5030' type='altera_avalon_pio.s1' /><slave name='buttons.s1' start='0x5030' end='0x5040' type='altera_avalon_pio.s1' /><slave name='rs232_0.avalon_rs232_slave' start='0x5050' end='0x5058' type='altera_up_avalon_rs232.avalon_rs232_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x5058' end='0x5060' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
   <parameter name="instruction_master_high_performance_paddr_size" value="0" />
   <parameter name="instruction_master_paddr_base" value="0" />
   <parameter name="instruction_master_paddr_size" value="0" />
-  <parameter name="internalIrqMaskSystemInfo" value="3" />
+  <parameter name="internalIrqMaskSystemInfo" value="5" />
   <parameter name="io_regionbase" value="0" />
   <parameter name="io_regionsize" value="0" />
   <parameter name="master_addr_map" value="false" />
@@ -459,21 +464,19 @@
   <parameter name="tracefilename" value="" />
   <parameter name="userDefinedSettings" value="" />
  </module>
- <module name="uart_0" kind="altera_avalon_uart" version="16.1" enabled="1">
+ <module
+   name="rs232_0"
+   kind="altera_up_avalon_rs232"
+   version="16.1"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV E" />
+  <parameter name="avalon_bus_type" value="Memory Mapped" />
   <parameter name="baud" value="115200" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="dataBits" value="8" />
-  <parameter name="fixedBaud" value="true" />
-  <parameter name="parity" value="NONE" />
-  <parameter name="simCharStream" value="" />
-  <parameter name="simInteractiveInputEnable" value="false" />
-  <parameter name="simInteractiveOutputEnable" value="false" />
-  <parameter name="simTrueBaud" value="false" />
-  <parameter name="stopBits" value="1" />
-  <parameter name="syncRegDepth" value="2" />
-  <parameter name="useCtsRts" value="false" />
-  <parameter name="useEopRegister" value="false" />
-  <parameter name="useRelativePathForSimFile" value="false" />
+  <parameter name="clk_rate" value="50000000" />
+  <parameter name="data_bits" value="8" />
+  <parameter name="parity" value="None" />
+  <parameter name="stop_bits" value="1" />
  </module>
  <connection
    kind="avalon"
@@ -481,7 +484,16 @@
    start="nios2_gen2_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3048" />
+  <parameter name="baseAddress" value="0x5058" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="nios2_gen2_0.data_master"
+   end="rs232_0.avalon_rs232_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x5050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -490,7 +502,7 @@
    start="nios2_gen2_0.data_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x2800" />
+  <parameter name="baseAddress" value="0x4800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -499,7 +511,7 @@
    start="nios2_gen2_0.data_master"
    end="memoria.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="baseAddress" value="0x2000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -508,7 +520,7 @@
    start="nios2_gen2_0.data_master"
    end="buttons.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3030" />
+  <parameter name="baseAddress" value="0x5030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -517,16 +529,7 @@
    start="nios2_gen2_0.data_master"
    end="leds.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="nios2_gen2_0.data_master"
-   end="uart_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x2020" />
+  <parameter name="baseAddress" value="0x5020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -535,7 +538,16 @@
    start="nios2_gen2_0.instruction_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3048" />
+  <parameter name="baseAddress" value="0x5058" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="nios2_gen2_0.instruction_master"
+   end="rs232_0.avalon_rs232_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x5050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -544,7 +556,7 @@
    start="nios2_gen2_0.instruction_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x2800" />
+  <parameter name="baseAddress" value="0x4800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -553,7 +565,7 @@
    start="nios2_gen2_0.instruction_master"
    end="memoria.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="baseAddress" value="0x2000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -562,7 +574,7 @@
    start="nios2_gen2_0.instruction_master"
    end="buttons.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3030" />
+  <parameter name="baseAddress" value="0x5030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -571,37 +583,28 @@
    start="nios2_gen2_0.instruction_master"
    end="leds.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="nios2_gen2_0.instruction_master"
-   end="uart_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x2020" />
+  <parameter name="baseAddress" value="0x5020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="clock" version="16.1" start="clk_0.clk" end="nios2_gen2_0.clk" />
  <connection kind="clock" version="16.1" start="clk_0.clk" end="buttons.clk" />
  <connection kind="clock" version="16.1" start="clk_0.clk" end="leds.clk" />
  <connection kind="clock" version="16.1" start="clk_0.clk" end="jtag_uart_0.clk" />
- <connection kind="clock" version="16.1" start="clk_0.clk" end="uart_0.clk" />
+ <connection kind="clock" version="16.1" start="clk_0.clk" end="rs232_0.clk" />
  <connection kind="clock" version="16.1" start="clk_0.clk" end="memoria.clk1" />
+ <connection
+   kind="interrupt"
+   version="16.1"
+   start="nios2_gen2_0.irq"
+   end="rs232_0.interrupt">
+  <parameter name="irqNumber" value="2" />
+ </connection>
  <connection
    kind="interrupt"
    version="16.1"
    start="nios2_gen2_0.irq"
    end="jtag_uart_0.irq">
   <parameter name="irqNumber" value="0" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.1"
-   start="nios2_gen2_0.irq"
-   end="uart_0.irq">
-  <parameter name="irqNumber" value="1" />
  </connection>
  <connection
    kind="nios_custom_instruction"
@@ -632,7 +635,7 @@
    kind="reset"
    version="16.1"
    start="clk_0.clk_reset"
-   end="uart_0.reset" />
+   end="rs232_0.reset" />
  <connection
    kind="reset"
    version="16.1"
@@ -662,7 +665,7 @@
    kind="reset"
    version="16.1"
    start="nios2_gen2_0.debug_reset_request"
-   end="uart_0.reset" />
+   end="rs232_0.reset" />
  <connection
    kind="reset"
    version="16.1"

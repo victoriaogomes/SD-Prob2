@@ -8,8 +8,8 @@
 			lcd_rw_writeresponsevalid_n     : out std_logic;                                       -- writeresponsevalid_n
 			leds_export                     : out std_logic_vector(3 downto 0);                    -- export
 			reset_reset_n                   : in  std_logic                    := 'X';             -- reset_n
-			uart_0_external_connection_rxd  : in  std_logic                    := 'X';             -- rxd
-			uart_0_external_connection_txd  : out std_logic                                        -- txd
+			rs232_0_external_interface_RXD  : in  std_logic                    := 'X';             -- RXD
+			rs232_0_external_interface_TXD  : out std_logic                                        -- TXD
 		);
 	end component arqt;
 
@@ -23,7 +23,7 @@
 			lcd_rw_writeresponsevalid_n     => CONNECTED_TO_lcd_rw_writeresponsevalid_n,     --                     lcd_rw.writeresponsevalid_n
 			leds_export                     => CONNECTED_TO_leds_export,                     --                       leds.export
 			reset_reset_n                   => CONNECTED_TO_reset_reset_n,                   --                      reset.reset_n
-			uart_0_external_connection_rxd  => CONNECTED_TO_uart_0_external_connection_rxd,  -- uart_0_external_connection.rxd
-			uart_0_external_connection_txd  => CONNECTED_TO_uart_0_external_connection_txd   --                           .txd
+			rs232_0_external_interface_RXD  => CONNECTED_TO_rs232_0_external_interface_RXD,  -- rs232_0_external_interface.RXD
+			rs232_0_external_interface_TXD  => CONNECTED_TO_rs232_0_external_interface_TXD   --                           .TXD
 		);
 
