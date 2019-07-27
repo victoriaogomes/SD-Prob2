@@ -1,5 +1,5 @@
 Flow report for problema1
-Sat Jul 27 09:25:54 2019
+Sat Jul 27 12:14:33 2019
 Quartus Prime Version 16.1.2 Build 203 01/18/2017 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Sat Jul 27 09:25:50 2019       ;
+; Flow Status                        ; Successful - Sat Jul 27 12:14:25 2019       ;
 ; Quartus Prime Version              ; 16.1.2 Build 203 01/18/2017 SJ Lite Edition ;
 ; Revision Name                      ; problema1                                   ;
 ; Top-level Entity Name              ; problema1                                   ;
@@ -65,7 +65,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 07/27/2019 09:24:57 ;
+; Start date & time ; 07/27/2019 12:12:37 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; problema1           ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ agreement for further details.
 +-------------------------------------+--------------------------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+--------------------------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 93181009264021.156423029714596                         ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 93181009264021.156424035613480                         ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                                      ; --            ; --          ; --         ;
 ; MISC_FILE                           ; arqt/synthesis/../arqt.cmp                             ; --            ; --          ; --         ;
@@ -101,11 +101,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:36     ; 1.0                     ; 4900 MB             ; 00:00:55                           ;
-; Fitter                    ; 00:00:10     ; 1.1                     ; 5530 MB             ; 00:00:10                           ;
-; Assembler                 ; 00:00:02     ; 1.0                     ; 4682 MB             ; 00:00:01                           ;
-; TimeQuest Timing Analyzer ; 00:00:03     ; 1.2                     ; 4784 MB             ; 00:00:03                           ;
-; Total                     ; 00:00:51     ; --                      ; --                  ; 00:01:09                           ;
+; Analysis & Synthesis      ; 00:01:15     ; 1.0                     ; 4900 MB             ; 00:01:57                           ;
+; Fitter                    ; 00:00:20     ; 1.1                     ; 5528 MB             ; 00:00:20                           ;
+; Assembler                 ; 00:00:04     ; 1.0                     ; 4684 MB             ; 00:00:03                           ;
+; TimeQuest Timing Analyzer ; 00:00:07     ; 1.2                     ; 4790 MB             ; 00:00:06                           ;
+; Total                     ; 00:01:46     ; --                      ; --                  ; 00:02:26                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
